@@ -1,16 +1,17 @@
 package com.sakebook.android.nexustimer.ui
 
-import android.graphics.Color
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v17.leanback.app.BrowseFragment
 import android.support.v17.leanback.widget.*
 import android.support.v4.content.ContextCompat
-import android.view.Gravity
-import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import com.sakebook.android.nexustimer.R
 import com.sakebook.android.nexustimer.presenter.GridItemPresenter
+import com.sakebook.android.nexustimer.presenter.ItemViewClickedListener
+import java.util.*
 
 /**
  * Created by sakemotoshinya on 16/06/04.
@@ -18,6 +19,7 @@ import com.sakebook.android.nexustimer.presenter.GridItemPresenter
 class TvFragment: BrowseFragment() {
 
     val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
+    val REQUEST_CODE = 100
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -34,7 +36,8 @@ class TvFragment: BrowseFragment() {
     }
 
     private fun loadRows() {
-        val headerItem0 = HeaderItem(0, "Good Morning")
+        val title0 = "Good Morning"
+        val headerItem0 = HeaderItem(title0.hashCode().toLong(), title0)
         val gridPresenter = GridItemPresenter()
         val gridRowAdapter0 = ArrayObjectAdapter(gridPresenter)
         gridRowAdapter0.add("ON")
@@ -42,7 +45,8 @@ class TvFragment: BrowseFragment() {
         gridRowAdapter0.add("DELETE")
         rowsAdapter.add(ListRow(headerItem0, gridRowAdapter0))
 
-        val headerItem1 = HeaderItem(0, "Good Night")
+        val title1 = "Good Night"
+        val headerItem1 = HeaderItem(title1.hashCode().toLong(), title1)
         val gridRowAdapter1 = ArrayObjectAdapter(gridPresenter)
         gridRowAdapter1.add("ON")
         gridRowAdapter1.add("SETTING")
@@ -54,12 +58,50 @@ class TvFragment: BrowseFragment() {
     private fun setupEventListeners() {
 
         setOnSearchClickedListener {
-            Toast.makeText(activity, "Implement your own in-app search", Toast.LENGTH_LONG).show()
+            val title = UUID.randomUUID().toString()
+            val headerItem = HeaderItem(title.hashCode().toLong(), title)
+            val gridPresenter = GridItemPresenter()
+            val gridRowAdapter = ArrayObjectAdapter(gridPresenter)
+            gridRowAdapter.add("ON")
+            gridRowAdapter.add("SETTING")
+            gridRowAdapter.add("DELETE")
+            rowsAdapter.add(ListRow(headerItem, gridRowAdapter))
+
+//            AlertDialog.Builder(activity)
+//                .setTitle("create")
+//                .setMessage("message")
+//                    .setView(R.layout.dialog_layout)
+//                .setPositiveButton("ok") { dialog, which ->
+//                }
+//                .show()
         }
 
-//        onItemViewClickedListener = ItemViewClickedListener()
+        onItemViewClickedListener = ItemViewClickedListener(this)
 //        onItemViewSelectedListener = ItemViewSelectedListener()
-
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Toast.makeText(activity, "onActivityResult: ${requestCode}, ${resultCode}", Toast.LENGTH_LONG).show()
+        if (REQUEST_CODE != requestCode) {
+            return
+        }
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
+        data?.let {
+            val id = it.extras.getLong(SimpleDialogActivity.ARG_ID)
+            Toast.makeText(activity, "onActivityResult delete: ${id}", Toast.LENGTH_LONG).show()
+            loop@ for (i in 0..rowsAdapter.size()) {
+                val item = rowsAdapter.get(i) as ListRow
+                when (id) {
+                    item.id -> {
+                        rowsAdapter.remove(item)
+                        break@loop
+                    }
+                }
+            }
+            return
+        }
+    }
 }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NexusTimer</string>
+    <string name="dialog_title">このタイマーを削除します</string>
+    <string name="dialog_description">削除したタイマーは元に戻せません</string>
+    <string name="dialog_ok_title">はい</string>
+    <string name="dialog_ok_description">削除します</string>
+    <string name="dialog_ng_title">いいえ</string>
+    <string name="dialog_ng_description">削除しません</string>
 </resources>
