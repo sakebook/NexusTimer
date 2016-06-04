@@ -10,13 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sakebook.android.nexustimer.TvActivity">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Hello TV!!"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
+    <fragment
+        android:name="com.sakebook.android.nexustimer.TvFragment"
+        android:id="@+id/browse_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
 </RelativeLayout>
