@@ -1,7 +1,8 @@
-package com.sakebook.android.nexustimer
+package com.sakebook.android.nexustimer.ui
 
 import android.app.Activity
 import android.os.Bundle
+import com.sakebook.android.nexustimer.R
 
 class TvActivity : Activity() {
 
