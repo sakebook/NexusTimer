@@ -9,14 +9,14 @@ import android.widget.TextView
 import com.sakebook.android.nexustimer.R
 
 /**
- * Created by sakemotoshinya on 16/06/04.
+ * Created by sakemotoshinya on 16/06/05.
  */
-class GridItemPresenter : Presenter() {
+class OffTimerItemPresenter() : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         val view = TextView(parent.context)
         val res = parent.resources
-        val width = res.getDimensionPixelSize(R.dimen.grid_item_off_timer_width)
-        val height = res.getDimensionPixelSize(R.dimen.grid_item_off_timer_height)
+        val width = res.getDimensionPixelSize(R.dimen.card_width)
+        val height = res.getDimensionPixelSize(R.dimen.card_height)
 
         view.layoutParams = ViewGroup.LayoutParams(width, height)
         view.isFocusable = true
@@ -29,7 +29,7 @@ class GridItemPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
-        (viewHolder.view as TextView).text = item as String
+        (viewHolder.view as TextView).text = "${(item as String)}m"
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {

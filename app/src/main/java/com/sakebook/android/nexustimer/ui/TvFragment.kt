@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.sakebook.android.nexustimer.R
 import com.sakebook.android.nexustimer.presenter.GridItemPresenter
 import com.sakebook.android.nexustimer.presenter.ItemViewClickedListener
+import com.sakebook.android.nexustimer.presenter.OffTimerItemPresenter
 import java.util.*
 
 /**
@@ -36,6 +37,7 @@ class TvFragment: BrowseFragment() {
     }
 
     private fun loadRows() {
+        rowsAdapter.add(createDefaultTimer())
         val title0 = "Good Morning"
         val headerItem0 = HeaderItem(title0.hashCode().toLong(), title0)
         val gridPresenter = GridItemPresenter()
@@ -53,6 +55,20 @@ class TvFragment: BrowseFragment() {
         gridRowAdapter1.add("DELETE")
         rowsAdapter.add(ListRow(headerItem1, gridRowAdapter1))
         adapter = rowsAdapter
+    }
+
+    private fun createDefaultTimer(): ListRow {
+        val title = resources.getString(R.string.off_timer_title)
+        val headerItem = HeaderItem(title.hashCode().toLong(), title)
+        val gridPresenter = OffTimerItemPresenter()
+        val gridRowAdapter = ArrayObjectAdapter(gridPresenter)
+        gridRowAdapter.add("5")
+        gridRowAdapter.add("15")
+        gridRowAdapter.add("30")
+        gridRowAdapter.add("60")
+        gridRowAdapter.add("90")
+        gridRowAdapter.add("120")
+        return ListRow(headerItem, gridRowAdapter)
     }
 
     private fun setupEventListeners() {

@@ -5,4 +5,19 @@
 
     <dimen name="grid_item_width">100dp</dimen>
     <dimen name="grid_item_height">100dp</dimen>
+    <dimen name="grid_item_off_timer_width">313dp</dimen>
+    <dimen name="grid_item_off_timer_height">176dp</dimen>
+    <dimen name="card_width">156dp</dimen>
+    <dimen name="card_height">88dp</dimen>
+
+    <dimen name="font_content_title_big">34sp</dimen>
+    <dimen name="font_content_title">24sp</dimen>
+    <dimen name="font_browse_lane_title">20sp</dimen>
+    <dimen name="font_subhead">16sp</dimen>
+    <dimen name="font_button_label">16sp</dimen>
+    <dimen name="font_body">14sp</dimen>
+    <dimen name="font_text">14sp</dimen>
+    <dimen name="font_secondary_text">12sp</dimen>
+
+
 </resources>
