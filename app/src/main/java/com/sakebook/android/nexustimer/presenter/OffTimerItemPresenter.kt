@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
 import com.sakebook.android.nexustimer.R
+import com.sakebook.android.nexustimer.model.OffTimer
 
 /**
  * Created by sakemotoshinya on 16/06/05.
@@ -29,7 +30,7 @@ class OffTimerItemPresenter() : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
-        (viewHolder.view as TextView).text = "${(item as String)}m"
+        (viewHolder.view as TextView).text = "${(item as OffTimer).minute}m"
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {

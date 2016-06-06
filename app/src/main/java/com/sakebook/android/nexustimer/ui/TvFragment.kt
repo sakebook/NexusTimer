@@ -1,7 +1,6 @@
 package com.sakebook.android.nexustimer.ui
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v17.leanback.app.BrowseFragment
@@ -9,6 +8,7 @@ import android.support.v17.leanback.widget.*
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import com.sakebook.android.nexustimer.R
+import com.sakebook.android.nexustimer.model.OffTimer
 import com.sakebook.android.nexustimer.presenter.GridItemPresenter
 import com.sakebook.android.nexustimer.presenter.ItemViewClickedListener
 import com.sakebook.android.nexustimer.presenter.OffTimerItemPresenter
@@ -62,12 +62,7 @@ class TvFragment: BrowseFragment() {
         val headerItem = HeaderItem(title.hashCode().toLong(), title)
         val gridPresenter = OffTimerItemPresenter()
         val gridRowAdapter = ArrayObjectAdapter(gridPresenter)
-        gridRowAdapter.add("5")
-        gridRowAdapter.add("15")
-        gridRowAdapter.add("30")
-        gridRowAdapter.add("60")
-        gridRowAdapter.add("90")
-        gridRowAdapter.add("120")
+        OffTimer.values().forEach { gridRowAdapter.add(it) }
         return ListRow(headerItem, gridRowAdapter)
     }
 
@@ -82,19 +77,12 @@ class TvFragment: BrowseFragment() {
             gridRowAdapter.add("SETTING")
             gridRowAdapter.add("DELETE")
             rowsAdapter.add(ListRow(headerItem, gridRowAdapter))
-
-//            AlertDialog.Builder(activity)
-//                .setTitle("create")
-//                .setMessage("message")
-//                    .setView(R.layout.dialog_layout)
-//                .setPositiveButton("ok") { dialog, which ->
-//                }
-//                .show()
         }
 
         onItemViewClickedListener = ItemViewClickedListener(this)
 //        onItemViewSelectedListener = ItemViewSelectedListener()
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

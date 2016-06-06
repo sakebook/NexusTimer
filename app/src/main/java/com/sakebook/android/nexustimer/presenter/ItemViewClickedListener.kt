@@ -1,9 +1,14 @@
 package com.sakebook.android.nexustimer.presenter
 
 import android.app.Fragment
-import android.support.v17.leanback.widget.*
+import android.support.v17.leanback.widget.OnItemViewClickedListener
+import android.support.v17.leanback.widget.Presenter
+import android.support.v17.leanback.widget.Row
+import android.support.v17.leanback.widget.RowPresenter
 import android.support.v4.app.ActivityOptionsCompat
 import android.widget.Toast
+import com.sakebook.android.nexustimer.Utils
+import com.sakebook.android.nexustimer.model.OffTimer
 import com.sakebook.android.nexustimer.ui.SimpleDialogActivity
 import com.sakebook.android.nexustimer.ui.TvFragment
 
@@ -16,6 +21,12 @@ class ItemViewClickedListener(val fragment: Fragment) : OnItemViewClickedListene
                                rowViewHolder: RowPresenter.ViewHolder, row: Row) {
         if (fragment !is TvFragment) {
             Toast.makeText(itemViewHolder.view.context, "non supported this fragment", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (item is OffTimer) {
+            Toast.makeText(itemViewHolder.view.context, "OffTimer set ${item.minute} minute.", Toast.LENGTH_LONG).show()
+            Utils.setAlarm(itemViewHolder.view.context, item.minute)
             return
         }
 
