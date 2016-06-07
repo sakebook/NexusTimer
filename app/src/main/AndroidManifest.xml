@@ -31,6 +31,8 @@
         <activity
             android:name=".ui.SimpleDialogActivity" />
 
+        <receiver android:name=".receiver.AlarmBroadcastReceiver"/>
+
     </application>
 
 </manifest>
