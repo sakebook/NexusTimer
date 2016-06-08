@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v17.leanback.app.BrowseFragment
 import android.support.v17.leanback.widget.*
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import com.sakebook.android.nexustimer.R
@@ -77,6 +78,10 @@ class TvFragment: BrowseFragment() {
             gridRowAdapter.add("SETTING")
             gridRowAdapter.add("DELETE")
             rowsAdapter.add(ListRow(headerItem, gridRowAdapter))
+
+            val intent = Intent(activity, ScheduleCreateStepActivity::class.java)
+            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle()
+            startActivityForResult(intent, REQUEST_CODE, bundle)
         }
 
         onItemViewClickedListener = ItemViewClickedListener(this)

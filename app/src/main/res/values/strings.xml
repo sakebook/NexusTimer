@@ -7,4 +7,13 @@
     <string name="dialog_ok_description">削除します</string>
     <string name="dialog_ng_title">いいえ</string>
     <string name="dialog_ng_description">削除しません</string>
+
+    <!-- Step -->
+    <string name="schedule_title">繰り返しのタイマーを作成</string>
+    <string name="schedule_description">一週間で画面スリープしたい日時を設定します。</string>
+    <string name="schedule_ok_title">はい</string>
+    <string name="schedule_ok_description">作成します</string>
+    <string name="schedule_ng_title">いいえ</string>
+    <string name="schedule_ng_description">作成しません</string>
+
 </resources>
