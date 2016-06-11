@@ -13,6 +13,12 @@ enum class Week(val id: Long) {
     Sat(16),
     ;
 
-    val on = "ON"
-    val off = "OFF"
+    var enable = false
+
+    fun label(): String {
+        return when(enable) {
+            true -> "ON"
+            false -> "OFF"
+        }
+    }
 }

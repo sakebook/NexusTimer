@@ -35,7 +35,7 @@ class ItemViewClickedListener(val fragment: Fragment) : OnItemViewClickedListene
         if (item as String == "DELETE") {
             val intent = SimpleDialogActivity.createIntent(fragment.activity, row.headerItem.id)
             val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(fragment.activity).toBundle()
-            fragment.startActivityForResult(intent, fragment.REQUEST_CODE, bundle)
+            fragment.startActivityForResult(intent, fragment.DELETE_REQUEST_CODE, bundle)
             return
         }
 

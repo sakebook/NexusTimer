@@ -21,7 +21,8 @@ import java.util.*
 class TvFragment: BrowseFragment() {
 
     val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
-    val REQUEST_CODE = 100
+    val DELETE_REQUEST_CODE = 100
+    val CREATE_REQUEST_CODE = 101
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -39,6 +40,7 @@ class TvFragment: BrowseFragment() {
 
     private fun loadRows() {
         rowsAdapter.add(createDefaultTimer())
+        // TODO: load from DB
         val title0 = "Good Morning"
         val headerItem0 = HeaderItem(title0.hashCode().toLong(), title0)
         val gridPresenter = GridItemPresenter()
@@ -68,7 +70,6 @@ class TvFragment: BrowseFragment() {
     }
 
     private fun setupEventListeners() {
-
         setOnSearchClickedListener {
             val title = UUID.randomUUID().toString()
             val headerItem = HeaderItem(title.hashCode().toLong(), title)
@@ -78,39 +79,50 @@ class TvFragment: BrowseFragment() {
             gridRowAdapter.add("SETTING")
             gridRowAdapter.add("DELETE")
             rowsAdapter.add(ListRow(headerItem, gridRowAdapter))
+            openCreateAlarm()
 
-            val intent = Intent(activity, ScheduleCreateStepActivity::class.java)
-            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle()
-            startActivityForResult(intent, REQUEST_CODE, bundle)
         }
-
         onItemViewClickedListener = ItemViewClickedListener(this)
 //        onItemViewSelectedListener = ItemViewSelectedListener()
+    }
+
+    private fun openCreateAlarm() {
+        val intent = Intent(activity, ScheduleCreateStepActivity::class.java)
+        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle()
+        startActivityForResult(intent, CREATE_REQUEST_CODE, bundle)
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Toast.makeText(activity, "onActivityResult: ${requestCode}, ${resultCode}", Toast.LENGTH_LONG).show()
-        if (REQUEST_CODE != requestCode) {
-            return
-        }
         if (resultCode != Activity.RESULT_OK) {
             return
         }
         data?.let {
-            val id = it.extras.getLong(SimpleDialogActivity.ARG_ID)
-            Toast.makeText(activity, "onActivityResult delete: ${id}", Toast.LENGTH_LONG).show()
-            loop@ for (i in 0..rowsAdapter.size()) {
-                val item = rowsAdapter.get(i) as ListRow
-                when (id) {
-                    item.id -> {
-                        rowsAdapter.remove(item)
-                        break@loop
-                    }
+            when(requestCode) {
+                CREATE_REQUEST_CODE -> create(it)
+                DELETE_REQUEST_CODE -> delete(it)
+                else -> return
+            }
+        }
+    }
+
+    private fun create(data: Intent) {
+        Toast.makeText(activity, "onActivityResult create: ${data.getSerializableExtra("arg_weeks")}", Toast.LENGTH_LONG).show()
+    }
+
+    private fun delete(data: Intent) {
+        val id = data.extras.getLong(SimpleDialogActivity.ARG_ID)
+        Toast.makeText(activity, "onActivityResult delete: ${id}", Toast.LENGTH_LONG).show()
+        loop@ for (i in 0..rowsAdapter.size()) {
+            val item = rowsAdapter.get(i) as ListRow
+            when (id) {
+                item.id -> {
+                    rowsAdapter.remove(item)
+                    break@loop
                 }
             }
-            return
         }
     }
 }
