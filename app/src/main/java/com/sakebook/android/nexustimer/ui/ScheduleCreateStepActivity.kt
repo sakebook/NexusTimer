@@ -99,6 +99,8 @@ class ScheduleCreateStepActivity : Activity() {
     class TimeFragment : GuidedStepFragment() {
 
         private val ARG_WEEKS = "arg_weeks"
+        private val ARG_HOUR = "arg_hour"
+        private val ARG_MINUTE = "arg_minute"
         private var hour = 0
         private var minute = 0
 
@@ -148,8 +150,8 @@ class ScheduleCreateStepActivity : Activity() {
                     val data = Intent();
                     val bundle = Bundle();
                     bundle.putSerializable(ARG_WEEKS, arguments.getSerializable(ARG_WEEKS))
-                    bundle.putInt("hour", hour)
-                    bundle.putInt("minute", minute)
+                    bundle.putInt(ARG_HOUR, hour)
+                    bundle.putInt(ARG_MINUTE, minute)
                     data.putExtras(bundle);
                     activity.setResult(Activity.RESULT_OK, data)
                     activity.finishAfterTransition()
